@@ -1,6 +1,8 @@
 package io.realworld.server
 
+import io.realworld.models.error._
 import zhttp.http._
+import zio.json._
 
 object RealWorldServer {
 
@@ -8,9 +10,17 @@ object RealWorldServer {
     import routes._
     UsersRoutes.routes.catchAll {
       case AppError.MissingBodyError =>
-        Http.text("MISSING BODY").setStatus(Status.UnprocessableEntity)
+        Http.response(
+          Response
+            .json(ValidationErrorResponse.bodyError("missing body").toJson)
+            .setStatus(Status.UnprocessableEntity)
+        )
       case AppError.JsonDecodingError(message) =>
-        Http.text(s"JSON DECODING ERROR: $message").setStatus(Status.UnprocessableEntity)
+        Http.response(
+          Response
+            .json(ValidationErrorResponse.bodyError(message).toJson)
+            .setStatus(Status.UnprocessableEntity)
+        )
     }
   }
 

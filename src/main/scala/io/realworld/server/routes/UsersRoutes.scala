@@ -33,8 +33,8 @@ object UsersRoutes {
       email: Email,
       token: AuthToken,
       username: Username,
-      bio: Option[String] = None,
-      image: Option[String] = None
+      bio: Option[Bio] = None,
+      image: Option[ImageURL] = None
   )
   object UserDto {
     implicit val codec: JsonCodec[UserDto] = DeriveJsonCodec.gen[UserDto]
