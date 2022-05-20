@@ -6,3 +6,5 @@ object AppError {
   case object MissingBodyError                  extends AppError
   case class JsonDecodingError(message: String) extends AppError
 }
+
+

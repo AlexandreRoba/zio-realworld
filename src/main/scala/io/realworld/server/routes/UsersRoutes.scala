@@ -1,12 +1,13 @@
 package io.realworld.server.routes
 
+import io.realworld.models.user._
 import zhttp.http._
 import zio._
 import zio.json._
 
 object UsersRoutes {
 
-  final case class UserLogin(email: String, password: String)
+  final case class UserLogin(email: Email, password: Password)
   object UserLogin {
     implicit val codec: JsonCodec[UserLogin] = DeriveJsonCodec.gen[UserLogin]
   }
@@ -16,7 +17,7 @@ object UsersRoutes {
     implicit val codec: JsonCodec[LoginRequest] = DeriveJsonCodec.gen[LoginRequest]
   }
 
-  final case class UserRegistration(username: String, email: String, password: String)
+  final case class UserRegistration(username: Username, email: Email, password: Password)
 
   object UserRegistration {
     implicit val codec: JsonCodec[UserRegistration] = DeriveJsonCodec.gen[UserRegistration]
@@ -29,9 +30,9 @@ object UsersRoutes {
   }
 
   final case class UserDto(
-      email: String,
-      token: String,
-      username: String,
+      email: Email,
+      token: AuthToken,
+      username: Username,
       bio: Option[String] = None,
       image: Option[String] = None
   )
@@ -50,7 +51,7 @@ object UsersRoutes {
       for {
         body         <- req.bodyAsString.orElseFail(AppError.MissingBodyError)
         loginRequest <- ZIO.from(body.fromJson[LoginRequest]).mapError(AppError.JsonDecodingError)
-        user <- ZIO.succeed(UserResponse(UserDto(loginRequest.user.email, "token", "username")))
+        user <- ZIO.succeed(UserResponse(UserDto(loginRequest.user.email, AuthToken("token"), Username("username"))))
       } yield Response.json(user.toJson)
 
     case req @ Method.POST -> !! / "api" / "users" =>
@@ -61,7 +62,7 @@ object UsersRoutes {
           .mapError(AppError.JsonDecodingError)
         user <- ZIO.succeed(
           UserResponse(
-            UserDto(registrationRequest.user.email, "token", registrationRequest.user.username)
+            UserDto(registrationRequest.user.email, AuthToken("token"), registrationRequest.user.username)
           )
         )
       } yield Response.json(user.toJson)

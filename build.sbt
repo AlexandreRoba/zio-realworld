@@ -12,23 +12,27 @@ val postgresVersion   = "42.3.4"
 val flywayVersion     = "8.5.10"
 val zioPreludeVersion = "1.0.0-RC13"
 val logbackVersion    = "1.2.11"
+val jwtVersion        = "3.19.2"
 
 lazy val root = project
   .in(file("."))
   .settings(
     name := "ZIO-RealWorld",
     libraryDependencies ++= Seq(
-      "dev.zio"       %% "zio"             % zioVersion,
-      "dev.zio"       %% "zio-test"        % zioVersion     % Test,
-      "dev.zio"       %% "zio-test-sbt"    % zioVersion     % Test,
-      "dev.zio"       %% "zio-prelude"     % zioPreludeVersion,
-      "dev.zio"       %% "zio-config"      % zioConfigVersion,
-      "dev.zio"       %% "zio-json"        % zioJsonVersion,
-      "io.d11"        %% "zhttp"           % zioHttpVersion,
-      "io.d11"        %% "zhttp-test"      % zioHttpVersion % Test,
-      "io.getquill"   %% "quill-jdbc-zio"  % zioQuillVersion,
-      "org.postgresql" % "postgresql"      % postgresVersion,
-      "org.flywaydb"   % "flyway-core"     % flywayVersion,
-      "ch.qos.logback" % "logback-classic" % logbackVersion
+      "dev.zio"       %% "zio"                 % zioVersion,
+      "dev.zio"       %% "zio-test"            % zioVersion     % Test,
+      "dev.zio"       %% "zio-test-sbt"        % zioVersion     % Test,
+      "dev.zio"       %% "zio-prelude"         % zioPreludeVersion,
+      "dev.zio"       %% "zio-config"          % zioConfigVersion,
+      "dev.zio"       %% "zio-config-typesafe" % zioConfigVersion,
+      "dev.zio"       %% "zio-config-magnolia" % zioConfigVersion,
+      "dev.zio"       %% "zio-json"            % zioJsonVersion,
+      "io.d11"        %% "zhttp"               % zioHttpVersion,
+      "io.d11"        %% "zhttp-test"          % zioHttpVersion % Test,
+      "io.getquill"   %% "quill-jdbc-zio"      % zioQuillVersion,
+      "org.postgresql" % "postgresql"          % postgresVersion,
+      "org.flywaydb"   % "flyway-core"         % flywayVersion,
+      "ch.qos.logback" % "logback-classic"     % logbackVersion,
+      "com.auth0"      % "java-jwt"            % jwtVersion
     )
   )

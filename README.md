@@ -20,3 +20,9 @@ For more information on how to this works with other frontends/backends, head ov
 # Getting started
 
 > npm install, npm start, etc.
+
+# Inspiration
+In order to focus on what is special about ZIO I have used the same SQL definition
+as the one used for the Http4s + cats Backend RealWorld implementation.
+
+I've also used the same application structure as the zio-petclinic example app.
