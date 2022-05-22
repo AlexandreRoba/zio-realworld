@@ -1,6 +1,5 @@
 package io.realworld
 
-import io.realworld.models.user.UserId
 import zio._
 import io.realworld.server._
 import io.realworld.services._
